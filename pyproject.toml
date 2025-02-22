@@ -1,0 +1,12 @@
+[project]
+name = "ai-lawyer-help"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=0.6.3",
+    "django>=5.1.6",
+    "langchain-chroma>=0.2.2",
+    "langchain[ollama,openai]>=0.3.19",
+]
