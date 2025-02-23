@@ -14,7 +14,11 @@ THIRD_PART_APPS = [
     "corsheaders",
 ]
 
-APPLICATION_APPS = []
+APPLICATION_APPS = [
+    "common",
+    "customer_onboarding",
+    "lawfirm",
+]
 
 INSTALLED_APPS += APPLICATION_APPS
 INSTALLED_APPS += THIRD_PART_APPS

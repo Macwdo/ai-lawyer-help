@@ -1,5 +1,3 @@
-APP_NAME = $(APP_NAME)
-
 # Lint
 lint:
 	@echo "Running lint format 🧹"
