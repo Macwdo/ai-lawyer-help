@@ -1,6 +1,7 @@
 # Project Files
 .data
 .idea
+tmp
 
 static
 media

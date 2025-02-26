@@ -65,45 +65,24 @@ collectstatic_container:
 	-@ docker exec -it $(APP_NAME) uv run python manage.py collectstatic --noinput
 
 # Infra
-## Production
-up_prod:
-	@echo "Running the project in production mode 🚀"
-	-@ docker compose -f docker-compose-prod.yml down
-	-@ docker compose -f docker-compose-prod.yml up -d
-
-up_prod_build:
-	@echo "Running the project in production mode 🚀"
-	-@ docker compose -f docker-compose-prod.yml down
-	-@ docker compose -f docker-compose-prod.yml up -d --build
-
-run_prod:
-	@echo "Running the project in production mode 🚀"
-	-@ docker compose -f docker-compose-prod.yml down
-	-@ docker compose -f docker-compose-prod.yml up
-
-down_prod:
-	@echo "Stopping the project in production mode 🛑"
-	-@ docker compose -f docker-compose-prod.yml down
-
-## Development
 up_dev:
 	@echo "Setting up Application Infrastructure... 🚀"
-	-@ docker compose -f docker-compose-dev.yml down
-	-@ docker compose -f docker-compose-dev.yml up -d
+	-@ docker compose -f docker-compose.yml down
+	-@ docker compose -f docker-compose.yml up -d
 
 up_dev_build:
 	@echo "Setting up Application Infrastructure... 🚀"
-	-@ docker compose -f docker-compose-dev.yml down
-	-@ docker compose -f docker-compose-dev.yml up -d --build
+	-@ docker compose -f docker-compose.yml down
+	-@ docker compose -f docker-compose.yml up -d --build
 
 run_dev:
 	@echo "Running the project in development mode 🚀"
-	-@ docker compose -f docker-compose-dev.yml down
-	-@ docker compose -f docker-compose-dev.yml up
+	-@ docker compose -f docker-compose.yml down
+	-@ docker compose -f docker-compose.yml up
 
 down_dev:
 	@echo "Stopping the project 🛑"
-	-@ docker compose -f docker-compose-dev.yml down
+	-@ docker compose -f docker-compose.yml down
 
 clean:
 	@echo "Cleaning up the project 🧹"

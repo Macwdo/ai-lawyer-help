@@ -10,6 +10,7 @@ from .apps import *  # noqa
 from .auth import *  # noqa
 from .aws import *  # noqa
 from .base import *  # noqa
+from .celery import *  # noqa
 from .database import *  # noqa
 from .enviroment import *  # noqa
 from .files import *  # noqa

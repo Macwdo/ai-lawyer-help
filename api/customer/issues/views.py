@@ -1,8 +1,11 @@
+from rest_framework import status
+from rest_framework.response import Response
 from api.customer.issues.serializers import (
     CustomerIssueFileSerializer,
     CustomerIssueSerializer,
 )
 from common.views import BaseModelViewSet
+from customer_onboarding.tasks import sync_customer_issues_files_to_rag
 from lawfirm.models import Customer, CustomerIssue, CustomerIssueFile
 
 
@@ -39,3 +42,19 @@ class CustomerIssueFileModelViewSet(BaseModelViewSet):
         )
 
         return queryset
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        customer_issue_file_id = serializer.instance.pk
+        sync_customer_issues_files_to_rag.delay(customer_issue_file_id)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers,
+        )

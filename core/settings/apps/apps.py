@@ -11,6 +11,7 @@ THIRD_PART_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "django_cleanup.apps.CleanupConfig",
+    "django_celery_beat",
     "corsheaders",
 ]
 

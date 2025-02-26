@@ -23,6 +23,9 @@ dependencies = [
     "langchain[ollama,openai]>=0.3.19",
     "chromadb>=0.6.3",
     "drf-nested-routers>=0.94.1",
+    "django-celery-beat>=2.7.0",
+    "django-celery-results>=2.5.1",
+    "langchain-community>=0.3.18",
 ]
 
 [dependency-groups]

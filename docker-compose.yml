@@ -44,3 +44,13 @@ services:
       mc rb --force minio/${AWS_STORAGE_BUCKET_NAME};
       mc mb --quiet minio/${AWS_STORAGE_BUCKET_NAME};
       "
+
+  mq:
+    image: rabbitmq:4.0.3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./.data/rabbitmq:/var/lib/rabbitmq
+
