@@ -17,10 +17,7 @@ THIRD_PART_APPS = [
     "silk",
 ]
 
-APPLICATION_APPS = [
-    "common",
-    "lawfirm",
-]
+APPLICATION_APPS = ["common", "lawfirm", "ai"]
 
 INSTALLED_APPS += APPLICATION_APPS
 INSTALLED_APPS += THIRD_PART_APPS

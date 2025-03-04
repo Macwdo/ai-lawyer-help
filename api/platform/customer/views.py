@@ -1,4 +1,4 @@
-from api.customer.serializers import CustomerSerializer
+from api.platform.customer.serializers import CustomerSerializer
 from common.views import BaseModelViewSet
 from lawfirm.models.customer import Customer
 

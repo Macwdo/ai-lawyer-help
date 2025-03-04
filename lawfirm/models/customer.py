@@ -16,3 +16,11 @@ class CustomerIssue(BaseModel):
     ai_description = models.TextField()
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+
+
+class CustomerIssueFile(BaseModel):
+    class Meta:
+        unique_together = ("customer_issue", "file")
+
+    customer_issue = models.ForeignKey(CustomerIssue, on_delete=models.CASCADE)
+    file = models.ForeignKey(File, on_delete=models.CASCADE)

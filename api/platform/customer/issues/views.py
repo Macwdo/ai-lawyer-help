@@ -1,4 +1,4 @@
-from api.customer.issues.serializers import (
+from api.platform.customer.issues.serializers import (
     CustomerIssueSerializer,
 )
 from common.views import BaseModelViewSet

@@ -5,19 +5,15 @@ from django.urls import include, path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 auth = [
-    path("token", TokenObtainPairView.as_view(), name="token"),
+    path("token/", TokenObtainPairView.as_view(), name="token"),
     path("refresh/", TokenRefreshView.as_view(), name="refresh"),
 ]
 
 
-api_v1 = [
-    path("auth/", include(auth), name="auth"),
-    path("platform/", include("api.urls")),
-]
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/", include(api_v1)),
+    path("api/v1/", include("api.urls")),
+    path("api/auth/", include(auth), name="auth"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

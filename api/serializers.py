@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 class CodeRelatedField(serializers.SlugRelatedField):
-    def __init__(self, model, **kwargs):
+    def __init__(self, *, model, **kwargs):
         queryset = model.objects.all()
         kwargs["queryset"] = queryset
         super().__init__(slug_field="code", write_only=True, **kwargs)

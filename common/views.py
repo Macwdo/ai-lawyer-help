@@ -1,7 +1,7 @@
 from http import HTTPMethod
 
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -9,6 +9,7 @@ from rest_framework.decorators import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
+from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
@@ -28,10 +29,24 @@ def auth_required(http_methods: list[HTTPMethod] = []):
     return decorator
 
 
-class BaseModelViewSet(viewsets.ModelViewSet):
+class BaseAPIView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+
+class BaseGenericViewSet(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+
+class BaseModelViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    BaseGenericViewSet,
+):
     lookup_url_kwarg = "code"
     lookup_field = "code"
 

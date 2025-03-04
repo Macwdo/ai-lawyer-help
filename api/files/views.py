@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import exceptions, status
+from rest_framework import mixins, status
 from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -11,21 +11,12 @@ from api.files.serializers import (
 )
 from common.models import File
 from common.services.files.file_direct_upload import FileDirectUploadService
-from common.views import BaseModelViewSet
+from common.views import BaseGenericViewSet
 
 
-class FileViewSet(BaseModelViewSet):
+class FileViewSet(BaseGenericViewSet, mixins.DestroyModelMixin):
     queryset = File.objects.all()
     serializer_class = FileSerializer
-
-    def create(self, request, *args, **kwargs):
-        return exceptions.MethodNotAllowed("Method not allowed")
-
-    def update(self, request, *args, **kwargs):
-        return exceptions.MethodNotAllowed("Method not allowed")
-
-    def partial_update(self, request, *args, **kwargs):
-        return exceptions.MethodNotAllowed("Method not allowed")
 
     @action(detail=False, methods=["post"], url_path="upload-start")
     def direct_upload_start(self, request: Request):
