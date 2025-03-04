@@ -1,6 +1,6 @@
 from api.customer.serializers import CustomerSerializer
 from common.views import BaseModelViewSet
-from lawfirm.models import Customer
+from lawfirm.models.customer import Customer
 
 
 class CustomerModelViewSet(BaseModelViewSet):

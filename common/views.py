@@ -1,7 +1,7 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
 from http import HTTPMethod
 
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -37,17 +37,35 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
     nested_field = None
     nested_prefix = None
-    parent_model = None
+    parent_model = None  # type: ignore
+
+    @property
+    def nested_kwarg(self):
+        return f"{self.nested_prefix}_{self.nested_field}"
 
     def get_queryset(self):
-        return self.queryset.order_by("-created_at")  # type: ignore
+        filters = {}
+
+        if self.nested_field and self.nested_prefix:
+            nested_relation_filter = {
+                f"{self.nested_prefix}__{self.nested_field}": self.kwargs[
+                    self.nested_kwarg
+                ]
+            }
+            filters.update(nested_relation_filter)
+
+        queryset = self.queryset.filter(**filters).order_by(  # type: ignore
+            "-created_at"
+        )
+
+        return queryset
 
     def get_serializer_context(self):
         ctx = super().get_serializer_context()
         if self.nested_field and self.nested_prefix:
-            kwarg = f"{self.nested_prefix}_{self.nested_field}"
             ctx[self.nested_prefix] = get_object_or_404(
-                self.parent_model, code=self.kwargs[kwarg]
-            )  # type: ignore
+                self.parent_model,  # type: ignore
+                code=self.kwargs[self.nested_kwarg],  # type: ignore
+            )
 
         return ctx

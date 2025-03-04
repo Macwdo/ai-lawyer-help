@@ -2,9 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
 
 auth = [
     path("token", TokenObtainPairView.as_view(), name="token"),
@@ -14,7 +12,7 @@ auth = [
 
 api_v1 = [
     path("auth/", include(auth), name="auth"),
-    path("platform/", include("api.urls"))
+    path("platform/", include("api.urls")),
 ]
 
 urlpatterns = [
@@ -24,3 +22,9 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("silk/", include("silk.urls", namespace="silk")),
+    ]

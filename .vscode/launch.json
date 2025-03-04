@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Django",
+            "name": "Run Server",
             "type": "debugpy",
             "request": "launch",
             "args": [
@@ -11,6 +11,20 @@
             "django": true,
             "autoStartBrowser": false,
             "program": "${workspaceFolder}/manage.py",
+            "justMyCode": false
+        },
+        {
+            "name": "Run Worker",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/.venv/bin/celery",
+            "args": [
+                "-A",
+                "core",
+                "worker",
+                "-l",
+                "INFO",
+            ],
             "justMyCode": false
         }
     ],

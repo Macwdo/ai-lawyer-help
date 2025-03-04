@@ -1,6 +1,5 @@
 from rest_framework import serializers
-
-from lawfirm.models import CustomerIssue, CustomerIssueFile
+from lawfirm.models.customer import CustomerIssue
 
 
 class CustomerIssueSerializer(serializers.ModelSerializer):
@@ -23,24 +22,3 @@ class CustomerIssueSerializer(serializers.ModelSerializer):
         customer_issue.save()
 
         return customer_issue
-
-
-class CustomerIssueFileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomerIssueFile
-        fields = [
-            "code",
-            "name",
-            "file",
-            "created_at",
-            "updated_at",
-        ]
-
-    def create(self, validated_data):
-        issue = self.context["issue"]
-
-        customer_issue_file = super().create(validated_data)
-        customer_issue_file.issue = issue
-        customer_issue_file.save()
-
-        return customer_issue_file

@@ -2,6 +2,7 @@
 .data
 .idea
 tmp
+.ruff_cache
 
 static
 media

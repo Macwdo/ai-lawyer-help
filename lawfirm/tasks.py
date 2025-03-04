@@ -1,5 +1,4 @@
 from celery import shared_task
-from lawfirm.models import CustomerIssueFile
 
 
 @shared_task

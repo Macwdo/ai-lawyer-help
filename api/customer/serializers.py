@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from lawfirm.models import Customer
+from lawfirm.models.customer import Customer
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -13,4 +13,5 @@ class CustomerSerializer(serializers.ModelSerializer):
             "email",
             "created_at",
             "updated_at",
+            "picture",
         ]

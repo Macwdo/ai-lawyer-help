@@ -1,11 +1,11 @@
-from rest_framework_nested import routers as nested_routers
 from rest_framework import routers
+from rest_framework_nested import routers as nested_routers
 
 from api.customer.issues.views import (
-    CustomerIssueFileModelViewSet,
     CustomerIssueModelViewSet,
 )
 from api.customer.views import CustomerModelViewSet
+from api.files.views import FileViewSet
 
 router = routers.SimpleRouter()
 
@@ -27,12 +27,14 @@ customer_router.register(
 issue_router = nested_routers.NestedSimpleRouter(
     customer_router,
     r"issues",
-    lookup="issue",  # This makes "<issue-code>" available
-)
-issue_router.register(
-    r"files",
-    CustomerIssueFileModelViewSet,
-    basename="customer-issue-files",
+    lookup="issue",
 )
 
-urlpatterns = router.urls + customer_router.urls + issue_router.urls
+files_router = routers.SimpleRouter()
+files_router.register(r"files", FileViewSet, basename="files")
+
+
+urlpatterns = []
+urlpatterns += (
+    router.urls + customer_router.urls + issue_router.urls + files_router.urls
+)
