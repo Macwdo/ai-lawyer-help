@@ -5,28 +5,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('ai', '0001_vector'),
+        ("ai", "0001_vector"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='OpenAIDocument3Large',
+            name="OpenAIDocument3Large",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField()),
-                ('embedding', pgvector.django.vector.VectorField(dimensions=3072)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.TextField()),
+                ("embedding", pgvector.django.vector.VectorField(dimensions=3072)),
             ],
         ),
         migrations.CreateModel(
-            name='OpenAIDocument3Small',
+            name="OpenAIDocument3Small",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField()),
-                ('embedding', pgvector.django.vector.VectorField(dimensions=1536)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.TextField()),
+                ("embedding", pgvector.django.vector.VectorField(dimensions=1536)),
             ],
         ),
     ]
