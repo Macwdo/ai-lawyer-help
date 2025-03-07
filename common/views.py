@@ -37,6 +37,8 @@ class BaseAPIView(APIView):
 class BaseGenericViewSet(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    lookup_url_kwarg = "code"
+    lookup_field = "code"
 
 
 class BaseModelViewSet(
@@ -47,9 +49,6 @@ class BaseModelViewSet(
     mixins.ListModelMixin,
     BaseGenericViewSet,
 ):
-    lookup_url_kwarg = "code"
-    lookup_field = "code"
-
     nested_field = None
     nested_prefix = None
     parent_model = None  # type: ignore

@@ -14,8 +14,13 @@ from common.services.files.file_direct_upload import FileDirectUploadService
 from common.views import BaseGenericViewSet
 
 
-class FileViewSet(BaseGenericViewSet, mixins.DestroyModelMixin):
-    queryset = File.objects.all()
+class FileViewSet(
+    BaseGenericViewSet,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    mixins.DestroyModelMixin,
+):
+    queryset = File.objects.all().order_by("-created_at")
     serializer_class = FileSerializer
 
     @action(detail=False, methods=["post"], url_path="upload-start")

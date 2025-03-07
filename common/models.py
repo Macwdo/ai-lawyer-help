@@ -30,12 +30,24 @@ class BaseModel(models.Model):
 
 
 class File(BaseModel):
+    class Type(models.TextChoices):
+        IMAGE_PNG = "image/png", "PNG Image"
+        IMAGE_JPEG = "image/jpeg", "JPEG Image"
+        TEXT_PLAIN = "text/plain", "Plain Text"
+        APPLICATION_PDF = "application/pdf", "PDF File"
+        AUDIO_MP3 = "audio/mpeg", "MP3 Audio"
+        AUDIO_WAV = "audio/wav", "WAV Audio"
+
+        # TODO: Support these file types
+        # ("video/mp4", "Video (MP4)"),
+        # ("image/gif", "Image (GIF)"),
+
     file = models.FileField(upload_to=upload_to, blank=True, null=True)
 
     original_file_name = models.TextField()
 
     file_name = models.CharField(max_length=255, unique=True)
-    file_type = models.CharField(max_length=255)
+    file_type = models.CharField(max_length=255, choices=Type.choices)
 
     upload_finished_at = models.DateTimeField(blank=True, null=True)
 

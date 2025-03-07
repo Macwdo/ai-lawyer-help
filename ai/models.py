@@ -1,8 +1,11 @@
 from django.db import models
 from pgvector.django import VectorField
 
+from common.models import BaseModel
 
-class OpenAIDocument3Small(models.Model):
+
+# embedding is defined by ai Model
+class OpenAIDocument3Small(BaseModel):
     text = models.TextField()
     embedding = VectorField(dimensions=1536)
 
@@ -10,7 +13,7 @@ class OpenAIDocument3Small(models.Model):
         return self.text[:50]
 
 
-class OpenAIDocument3Large(models.Model):
+class OpenAIDocument3Large(BaseModel):
     text = models.TextField()
     embedding = VectorField(dimensions=3072)
 

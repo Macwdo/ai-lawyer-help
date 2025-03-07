@@ -1,0 +1,5 @@
+LLAVA_7B_MODEL = "llava:7b"
+OPENAI_TRANSCRIPT_MODEL = "whisper-1"
+OPENAI_GPT_4_O_MODEL = "gpt-4o"
+OPENAI_GPT_4_O_MINI_MODEL = "gpt-4o-mini"
+OPENAI_TTS_MODEL = "tts-1"

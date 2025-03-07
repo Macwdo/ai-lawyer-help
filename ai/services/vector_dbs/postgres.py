@@ -6,12 +6,13 @@ from langchain_postgres import PGVector
 class PostgresVectorDB:
     def __init__(self, *, embeddings: Embeddings):
         self._embeddings = embeddings
+        self.__db_settings = settings.DATABASES["default"]
         self._conn_str = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(
-            settings.POSTGRES_USER,
-            settings.POSTGRES_PASSWORD,
-            settings.POSTGRES_HOST,
-            settings.POSTGRES_PORT,
-            settings.POSTGRES_DB_NAME,
+            self.__db_settings["USER"],
+            self.__db_settings["PASSWORD"],
+            self.__db_settings["HOST"],
+            self.__db_settings["PORT"],
+            self.__db_settings["NAME"],
         )
 
     def __call__(self, *args, **kwds):

@@ -1,13 +1,15 @@
 from . import AWS_STORAGE_BUCKET_NAME, BASE_DIR
 
 # Static files
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_PATH = "static"
+STATIC_URL = f"/{STATIC_PATH}/"
+STATIC_ROOT = BASE_DIR / f"{STATIC_PATH}"
 STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 
 # Media files
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_PATH = "media"
+MEDIA_URL = f"/{MEDIA_PATH}/"
+MEDIA_ROOT = BASE_DIR / f"{MEDIA_PATH}"
 
 # MEDIA_STORAGE = "django.core.files.storage.FileSystemStorage"
 # STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -19,13 +21,14 @@ STORAGES = {
         "BACKEND": S3_FILE_STORAGE,
         "OPTIONS": {
             "bucket_name": AWS_STORAGE_BUCKET_NAME,
-            "location": "media",
+            # WARN: Facing problem with presigned url upload when media path is set
+            "location": "",
         },
     },
     "staticfiles": {
         "BACKEND": S3_FILE_STORAGE,
         "OPTIONS": {
-            "location": "static",
+            "location": STATIC_PATH,
         },
     },
 }
