@@ -26,7 +26,7 @@ class BaseModel(models.Model):
         abstract = True
 
     def __str__(self):
-        return f"{self.__class__.__name__} - {self.pk}"
+        return f"{self.pk}-{self.code}-{self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
 
 
 class File(BaseModel):
