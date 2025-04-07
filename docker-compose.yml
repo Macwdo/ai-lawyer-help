@@ -1,5 +1,6 @@
 services:
   db: 
+    container_name: ${APP_NAME}_db
     image: pgvector/pgvector:pg17
     ports:
       - "5432:5432"
@@ -17,7 +18,7 @@ services:
 
   minio:
     image: minio/minio:latest
-    container_name: minio
+    container_name: ${APP_NAME}_s3
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -34,6 +35,7 @@ services:
       - ./.data/dev/minio:/data
 
   createbucket:
+    container_name: ${APP_NAME}_createbucket
     image: minio/mc:latest
     depends_on:
       - minio

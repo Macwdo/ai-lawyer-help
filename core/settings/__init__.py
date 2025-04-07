@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv()
 
 from .apps import *  # noqa
+from .ai import *  # noqa
 from .auth import *  # noqa
 from .aws import *  # noqa
 from .base import *  # noqa

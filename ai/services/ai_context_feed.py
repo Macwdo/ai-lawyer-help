@@ -1,9 +1,11 @@
-import tempfile
-
+from ai.services.ai.llm import LLMService
 from ai.services.document_manager import DocumentManager
-from ai.services.pdf_manager import PDFManager
+
+from ai.services.image_manager import ImageManager
+from ai.services.pdf_manager import PDFFeedManager, PDFManager
 from common.models import File
-from lawfirm.models.customer import CustomerIssue, CustomerIssueFile
+from common.services.files.file_utils import FileUtils
+from lawfirm.models.customer import CustomerIssue
 from lawfirm.models.lawsuit import Lawsuit
 
 
@@ -11,6 +13,19 @@ class AiContextFeedService:
     def __init__(self):
         self._document_manager = DocumentManager()
         self._pdf_manager = PDFManager()
+        self._image_manager = ImageManager()
+        self._llm_service = LLMService()
+
+        self._file_utils = FileUtils()
+
+        self._llm = self.__get_llm()
+        self._ocr = self.__get_ocr_llm()
+
+    def __get_llm(self):
+        return self._llm_service.get_llm()
+
+    def __get_ocr_llm(self):
+        return self._llm_service.get_ocr_llm()
 
     def feed_ai_context(
         self,
@@ -38,13 +53,6 @@ class AiContextFeedService:
         customer_issue: CustomerIssue,
         file: File,
     ):
-        customer_issue_file = CustomerIssueFile(
-            customer_issue=customer_issue,
-            file=file,
-        )
-        customer_issue_file.full_clean()
-        customer_issue_file.save()
-
         documents = self.get_documents_from_file(file=file)
 
     def get_documents_from_file(self, *, file: File):
@@ -58,19 +66,8 @@ class AiContextFeedService:
                 pass
 
             case File.Type.APPLICATION_PDF:
-                tmp_folder = tempfile.mkdtemp()
-                with tempfile.NamedTemporaryFile(suffix=".pdf") as tmp_pdf_file:
-                    tmp_pdf_file.write(file.file.read())
-                    tmp_pdf_file.flush()
-                    tmp_pdf_path = tmp_pdf_file.name
-
-                    text = self._pdf_manager.extract_text(path=tmp_pdf_path)
-                    images = self._pdf_manager.extract_images_from_pdf(
-                        pdf_path=tmp_pdf_path,
-                        output_folder=tmp_folder,
-                    )
-
-                documents = self._document_manager.from_text(text=text)
+                pdf_feed_manager = PDFFeedManager()
+                pdf_feed_manager.extract(file=file)
 
             case File.Type.AUDIO_MP3 | File.Type.AUDIO_WAV:
                 pass

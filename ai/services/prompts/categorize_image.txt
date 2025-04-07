@@ -1,0 +1,9 @@
+Given the following description, categorize the image and evaluate the accuracy of the match between the description and the image.
+The score field should represent the confidence level of the match, ranging from 0 to 100.
+Return the result in the following JSON serializable for python loads function:
+
+json
+{
+   "score": 85
+}
+

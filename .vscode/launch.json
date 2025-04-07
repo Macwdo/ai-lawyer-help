@@ -26,6 +26,14 @@
                 "INFO",
             ],
             "justMyCode": false
+        },
+        {
+            "name": "Run local tmp",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/tmp/${fileBasename}",
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ],
     "compounds": []

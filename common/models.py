@@ -1,3 +1,6 @@
+import tempfile
+from contextlib import contextmanager
+
 from django.db import models
 
 
@@ -57,3 +60,25 @@ class File(BaseModel):
         We consider a file "valid" if the the datetime flag has value.
         """
         return bool(self.upload_finished_at)
+
+    @contextmanager
+    def open_local_file(self):
+        """
+        Fetch the file from the storage and create a temporary file to work with.
+        It should be used in a context manager.
+        Example:
+
+            with file.open_local_file() as tmp_local_path:
+
+        """
+        with tempfile.NamedTemporaryFile() as tmp_file:
+            try:
+                with self.file.open("rb") as source_file:
+                    while chunk := source_file.read(8192):
+                        tmp_file.write(chunk)
+
+                tmp_file.flush()
+                yield tmp_file.name
+            finally:
+                tmp_file.close()
+                self.file.close()

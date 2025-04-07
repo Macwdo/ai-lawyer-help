@@ -22,9 +22,6 @@ class DocumentManager:
 
         return documents
 
-    def from_image(self, image: str, metadata: dict = {}) -> list[Document]:
-        return []
-
     def _attach_metadata_to_documents(
         self, documents: list[Document], metadata: dict
     ) -> list[Document]:
